@@ -29,7 +29,7 @@ class App extends Component {
       'pages/signupEmail/signupEmail',
       'pages/addCourse/addCourse',
       'pages/my/my',
-      'pages/detailCourse/detailCourse'
+      'pages/savedCourseDetail/savedCourseDetail'
     ],
     window: {
       backgroundTextStyle: 'light',

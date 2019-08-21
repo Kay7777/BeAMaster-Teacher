@@ -1,16 +1,15 @@
 import Taro, { Component } from '@tarojs/taro'
+import { connect } from '@tarojs/redux';
+import { formatDate, formatTime } from '../../utils/util'
 import { View, Text, Picker } from '@tarojs/components'
 import { AtButton, AtTextarea, AtInput, AtForm, AtRange, AtSlider } from 'taro-ui'
-import { connect } from '@tarojs/redux'
-import { formatDate, formatTime } from '../../utils/util'
-import { getTeacherCoursesData, addCourseData } from '../../actions/course'
+import './savedCourseDetail.scss'
+import { getTeacherCoursesData, updateCourseData, deleteCourse } from '../../actions/course'
 import { SAVED, POSTED } from '../../constants/course'
 
-import './addCourse.scss'
-
-class AddCourse extends Component {
+class savedCourseDetail extends Component {
   config = {
-    navigationBarTitleText: '添加课程'
+    navigationBarTitleText: '课程修改'
   }
 
   state = {
@@ -28,23 +27,62 @@ class AddCourse extends Component {
     courseState: ''
   }
 
-  addCourse = async () => {
-    // error checking
+  componentWillMount () {
+    const params = this.$router.params
+    let { 
+      courseName, 
+      coursePrefix, 
+      courseSuffix,
+      instructor,
+      courseDescription,
+      courseScale,
+      courseDuration,
+      courseDateSel,
+      courseTimeSel,
+      courseLocation,
+      courseState 
+    } = this.props.course.teacherCourses[params.courseId]
+    this.setState({
+      id: params.courseId,
+      courseName, 
+      coursePrefix, 
+      courseSuffix,
+      instructor,
+      courseDescription,
+      courseScale,
+      courseScaleText: `${courseScale[0]}~${courseScale[1]}`,
+      courseDuration,
+      courseDateSel,
+      courseTimeSel,
+      courseLocation,
+      courseState      
+    })
+  }
+
+  // change it to posted course
+  postCourse = async () => {
     this.state.courseState = POSTED
-    await this.props.addCourse(this.state)
+    await this.props.updateCourse(this.state)
+    // await this.props.deleteCourse(this.state)
     this.props.getTeacherCourses()
     Taro.switchTab({
       url: '/pages/index/index'
     })
   }
 
-  saveCourse = async () => {
+  // update course information
+  updateCourse = async () => {
     this.state.courseState = SAVED
-    await this.props.addCourse(this.state)
+    await this.props.updateCourse(this.state)
+    this.props.getTeacherCourses()    
+  }
+
+  deleteCourse = async() =>{
+    await this.props.deleteCourse(this.state)
     this.props.getTeacherCourses()
     Taro.switchTab({
       url: '/pages/index/index'
-    })    
+    })
   }
 
   courseNameInput (courseName) {
@@ -117,10 +155,10 @@ class AddCourse extends Component {
   render () {
     return (
       <View className='index'>
-        <AtForm 
-          onSubmit={this.addCourse.bind(this)}
+        
+        <AtForm
+          onSubmit={this.postCourse.bind(this)}
         >
-          {/* course name */}
           <AtInput
             name='courseName'
             title='课程名称'
@@ -202,22 +240,28 @@ class AddCourse extends Component {
             value={this.state.courseLocation}
             onChange={this.courseLocationInput.bind(this)}
           />
-          {/* price */}
-          {/* submit form */}
-          <AtButton type='primary' formType='submit'>发布课程</AtButton>
-          <AtButton type='secondary' onClick={this.saveCourse}>保存课程</AtButton>
+          <AtButton formType='submit' type='primary'>发布</AtButton>
+          <AtButton type='secondary' onClick={this.updateCourse} >更改</AtButton>
+          <AtButton type='secondary' onClick={this.deleteCourse} >删除</AtButton>
         </AtForm>
+
       </View>
-    )  
+    )
   }
 }
 
 export default connect(({course}) => ({course}), (dispatch) => ({
-  async addCourse (...args) {
-    await dispatch(addCourseData(...args))
+  async postCourse (...args) {
+    await dispatch(updateCourseData(...args))
+  },
+  async updateCourse(...args){
+    await dispatch(updateCourseData(...args))
+  },
+  async deleteCourse(...args){
+    await dispatch(deleteCourse(...args))
   },
   getTeacherCourses () {
     dispatch(getTeacherCoursesData())
   }
 })
-)(AddCourse)
+)(savedCourseDetail)

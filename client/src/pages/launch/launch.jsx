@@ -1,5 +1,6 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, AtLoadMore} from '@tarojs/components'
+import { View } from '@tarojs/components'
+import { AtLoadMore } from 'taro-ui'
 import { connect } from '@tarojs/redux'
 import './launch.scss'
 import { fetchTeacherData } from '../../actions/teacher';
@@ -34,7 +35,7 @@ class Launch extends Component {
       
       <View>
         <AtLoadMore
-        status={loading}
+        status={'loading'}
         />
       </View>
 

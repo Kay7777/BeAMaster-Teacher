@@ -23,9 +23,14 @@ class Index extends Component {
     })
   }
 
-  courseDetail = (courseId) => {
+  savedCourseDetail = (courseId) => {
     Taro.navigateTo({
-      url: '/pages/detailCourse/detailCourse?courseId=' + courseId
+      url: '/pages/savedCourseDetail/savedCourseDetail?courseId=' + courseId
+    })
+  }
+  postedCourseDetail =(courseId) => {
+    Taro.navigateTo({
+      url: '/pages/postedCourseDetail/postedCourseDetail?courseId=' + courseId
     })
   }
 
@@ -45,7 +50,7 @@ class Index extends Component {
                 note={`${teacherCourse.courseDateSel} ${teacherCourse.courseTimeSel}`}
                 extra={`${teacherCourse.courseDuration} min`}
                 title={teacherCourse.courseName}
-                onClick={this.courseDetail.bind(this, teacherCourse._id)}
+                onClick={this.postedCourseDetail.bind(this, teacherCourse._id)}
               >
                 {teacherCourse.courseDescription}
               </AtCard>
@@ -60,7 +65,7 @@ class Index extends Component {
                 note={`${teacherCourse.courseDateSel} ${teacherCourse.courseTimeSel}`}
                 extra={`${teacherCourse.courseDuration} min`}
                 title={teacherCourse.courseName}
-                onClick={this.courseDetail.bind(this, teacherCourse._id)}
+                onClick={this.savedCourseDetail.bind(this, teacherCourse._id)}
               >
                 {teacherCourse.courseDescription}
               </AtCard>
