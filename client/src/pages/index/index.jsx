@@ -2,7 +2,6 @@ import Taro, { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import { AtButton, AtCard } from 'taro-ui'
 import { connect } from '@tarojs/redux'
-
 import { getTeacherCoursesData } from '../../actions/course'
 import { POSTED, SAVED } from '../../constants/course'
 
@@ -23,25 +22,26 @@ class Index extends Component {
     })
   }
 
-  savedCourseDetail = (courseId) => {
-    Taro.navigateTo({
-      url: '/pages/savedCourseDetail/savedCourseDetail?courseId=' + courseId
-    })
-  }
   postedCourseDetail =(courseId) => {
     Taro.navigateTo({
       url: '/pages/postedCourseDetail/postedCourseDetail?courseId=' + courseId
     })
   }
 
+  savedCourseDetail = (courseId) => {
+    Taro.navigateTo({
+      url: '/pages/savedCourseDetail/savedCourseDetail?courseId=' + courseId
+    })
+  }
+  
+
   render () {
     let { teacherCourses } = this.props.course
-
     return (
       <View className='index'>
         <AtButton type='primary' onClick={this.addCourse}>添加课程</AtButton>
         <AtButton type='secondary' openType='contact'>联系客服</AtButton>
-        <View>posted的课程</View>
+        <View>发布在线的课程</View>
         { Object.values(teacherCourses).filter(
             teacherCourse => teacherCourse.courseState === POSTED
           ).map(
@@ -56,7 +56,7 @@ class Index extends Component {
               </AtCard>
           )
         }
-        <View>saved的课程</View>
+        <View>本地保存的课程</View>
         { Object.values(teacherCourses).filter(
             teacherCourse => teacherCourse.courseState === SAVED
           ).map(

@@ -2,14 +2,17 @@ import Taro, { Component } from '@tarojs/taro'
 import { connect } from '@tarojs/redux';
 import { formatDate, formatTime } from '../../utils/util'
 import { View, Text, Picker } from '@tarojs/components'
+import './postedCourseDetial.scss'
 import { AtButton, AtTextarea, AtInput, AtForm, AtRange, AtSlider } from 'taro-ui'
-import './savedCourseDetail.scss'
 import { getTeacherCoursesData, updateCourseData, deleteCourse } from '../../actions/course'
-import { SAVED, POSTED } from '../../constants/course'
+import { POSTED } from '../../constants/course'
 
-class SavedCourseDetail extends Component {
+// base on the policy, then decide the teacher can change the course details or not
+let isDisabled = true;
+
+class PostedCourseDetail extends Component {
   config = {
-    navigationBarTitleText: '课程修改'
+    navigationBarTitleText: '课程细节'
   }
 
   state = {
@@ -58,21 +61,9 @@ class SavedCourseDetail extends Component {
       courseState      
     })
   }
-
-  // change it to posted course
-  postCourse = async () => {
-    this.state.courseState = POSTED
-    await this.props.updateCourse(this.state)
-    // await this.props.deleteCourse(this.state)
-    this.props.getTeacherCourses()
-    Taro.switchTab({
-      url: '/pages/index/index'
-    })
-  }
-
   // update course information
   updateCourse = async () => {
-    this.state.courseState = SAVED
+    this.state.courseState = POSTED
     await this.props.updateCourse(this.state)
     this.props.getTeacherCourses()    
   }
@@ -151,15 +142,15 @@ class SavedCourseDetail extends Component {
     })
     return courseLocation
   }
+  
 
   render () {
+    
     return (
       <View className='index'>
-        
-        <AtForm
-          onSubmit={this.postCourse.bind(this)}
-        >
+        <AtForm>
           <AtInput
+            disabled={isDisabled}
             name='courseName'
             title='课程名称'
             type='text'
@@ -169,6 +160,7 @@ class SavedCourseDetail extends Component {
           />
           {/* course prefix */}
           <AtInput
+            disabled={isDisabled}
             name='coursePrefix'
             title='课程前缀'
             type='text'
@@ -178,6 +170,7 @@ class SavedCourseDetail extends Component {
           />
           {/* course suffix */}
           <AtInput
+            disabled={isDisabled}
             name='courseSuffix'
             title='课程后缀'
             type='number'
@@ -187,6 +180,7 @@ class SavedCourseDetail extends Component {
           />
           {/* instructor */}
           <AtInput
+            disabled={isDisabled}
             name='instructor'
             title='Instructor'
             type='text'
@@ -196,6 +190,7 @@ class SavedCourseDetail extends Component {
           />
           {/* description */}
           <AtTextarea
+            disabled={isDisabled}
             maxLength={200}
             placeholder='e.g. 这节课将用两小时复习完 Math115 全部内容。'
             value={this.state.courseDescription}
@@ -204,6 +199,7 @@ class SavedCourseDetail extends Component {
           {/* scale */}
           <Text>课程班人数：{this.state.courseScaleText}</Text>
           <AtRange
+            disabled={isDisabled}
             value={this.state.courseScale}
             min={10}
             max={50}
@@ -212,6 +208,7 @@ class SavedCourseDetail extends Component {
           {/* duration */}
           <Text>课程时长(min)</Text>
           <AtSlider 
+            disabled={isDisabled}
             step={5} 
             min={30} 
             max={180}
@@ -221,18 +218,19 @@ class SavedCourseDetail extends Component {
           />
           {/* start date */}
           <View>
-            <Picker mode='date' onChange={this.onCourseDateChange}>
+            <Picker disabled={isDisabled} mode='date' onChange={this.onCourseDateChange}>
               开课日期：{this.state.courseDateSel}
             </Picker>
           </View>
           {/* start time */}
           <View>
-            <Picker mode='time' onChange={this.onCourseTimeChange}>
+            <Picker disabled={isDisabled} mode='time' onChange={this.onCourseTimeChange}>
               开课时间：{this.state.courseTimeSel}
             </Picker>
           </View>
           {/* location */}
           <AtInput
+            disabled={isDisabled}
             name='location'
             title='上课地点'
             type='text'
@@ -240,20 +238,15 @@ class SavedCourseDetail extends Component {
             value={this.state.courseLocation}
             onChange={this.courseLocationInput.bind(this)}
           />
-          <AtButton formType='submit' type='primary'>发布</AtButton>
-          <AtButton type='secondary' onClick={this.updateCourse} >更改</AtButton>
+          <AtButton disabled={isDisabled} type='secondary' onClick={this.updateCourse} >更改</AtButton>
           <AtButton type='secondary' onClick={this.deleteCourse} >删除</AtButton>
         </AtForm>
-
       </View>
     )
   }
 }
 
 export default connect(({course}) => ({course}), (dispatch) => ({
-  async postCourse (...args) {
-    await dispatch(updateCourseData(...args))
-  },
   async updateCourse(...args){
     await dispatch(updateCourseData(...args))
   },
@@ -264,4 +257,4 @@ export default connect(({course}) => ({course}), (dispatch) => ({
     dispatch(getTeacherCoursesData())
   }
 })
-)(SavedCourseDetail)
+)(PostedCourseDetail)

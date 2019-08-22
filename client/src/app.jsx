@@ -2,13 +2,10 @@ import Taro, { Component } from '@tarojs/taro'
 import { Provider } from '@tarojs/redux'
 import '@tarojs/async-await'
 import configStore from './store'
-
 import { setGlobalData } from './constants/globalData'
 import { getWxUserData } from './utils/wx'
 import { fetchTeacherData } from './actions/teacher'
-
 import Launch from './pages/launch/launch'
-
 import './app.scss'
 
 const store = configStore()
@@ -29,7 +26,8 @@ class App extends Component {
       'pages/signupEmail/signupEmail',
       'pages/addCourse/addCourse',
       'pages/my/my',
-      'pages/savedCourseDetail/savedCourseDetail'
+      'pages/savedCourseDetail/savedCourseDetail',
+      'pages/postedCourseDetail/postedCourseDetail'
     ],
     window: {
       backgroundTextStyle: 'light',
