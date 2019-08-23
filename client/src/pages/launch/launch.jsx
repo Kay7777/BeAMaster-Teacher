@@ -1,5 +1,5 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View } from '@tarojs/components'
+import { View, Button } from '@tarojs/components'
 import { AtLoadMore } from 'taro-ui'
 import { connect } from '@tarojs/redux'
 import './launch.scss'

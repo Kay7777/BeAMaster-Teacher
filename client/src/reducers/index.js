@@ -4,5 +4,5 @@ import course from './course'
 
 export default combineReducers({
     teacher,
-    course
+    course,
 })
