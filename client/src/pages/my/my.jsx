@@ -1,5 +1,5 @@
 import Taro, { Component, downloadFile } from "@tarojs/taro"
-import { View, Text, Image, Video } from "@tarojs/components"
+import { View, Text, Image, Video, Swiper, SwiperItem } from "@tarojs/components"
 import { AtAvatar, AtButton } from 'taro-ui'
 import '@tarojs/async-await'
 import { connect } from '@tarojs/redux'
@@ -90,7 +90,9 @@ class My extends Component {
         onChange={this.UploadText.bind(this)}
         maxLength={200}
         placeholder='请介绍你自己！'
-      /> */}
+        /> */}
+        
+
         <Image src={image} />
         <Video src={video} />
         <AtButton type='secondary' onClick={this.UploadImage.bind(this)}>上传照片</AtButton>

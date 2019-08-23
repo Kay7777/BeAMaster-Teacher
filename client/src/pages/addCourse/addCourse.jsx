@@ -1,6 +1,6 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text, Picker } from '@tarojs/components'
-import { AtButton, AtTextarea, AtInput, AtForm, AtRange, AtSlider } from 'taro-ui'
+import { AtButton, AtTextarea, AtInput, AtForm, AtRange, AtSlider, AtModal } from 'taro-ui'
 import { connect } from '@tarojs/redux'
 import { formatDate, formatTime } from '../../utils/util'
 import { getTeacherCoursesData, addCourseData } from '../../actions/course'
@@ -25,17 +25,25 @@ class AddCourse extends Component {
     courseDateSel: formatDate(new Date()),
     courseTimeSel: formatTime(new Date()),
     courseLocation: '',
-    courseState: ''
+    courseState: '',
+    isOpened: false
+  }
+
+  callPolicy = async () => {
+    this.setState({isOpened:true})
   }
 
   addCourse = async () => {
-    // error checking
-    this.state.courseState = POSTED
-    await this.props.addCourse(this.state)
-    this.props.getTeacherCourses()
-    Taro.switchTab({
-      url: '/pages/index/index'
-    })
+      this.state.courseState = POSTED
+      await this.props.addCourse(this.state)
+      this.props.getTeacherCourses()
+      Taro.switchTab({
+        url: '/pages/index/index'
+      })
+  }
+
+  cancelCourse = async () => {
+    this.setState({isOpened:false})
   }
 
   saveCourse = async () => {
@@ -118,9 +126,8 @@ class AddCourse extends Component {
     return (
       <View className='index'>
         <AtForm 
-          onSubmit={this.addCourse.bind(this)}
+          onSubmit={this.callPolicy.bind(this)}
         >
-          {/* course name */}
           <AtInput
             name='courseName'
             title='课程名称'
@@ -129,7 +136,6 @@ class AddCourse extends Component {
             value={this.state.courseName}
             onChange={this.courseNameInput.bind(this)}
           />
-          {/* course prefix */}
           <AtInput
             name='coursePrefix'
             title='课程前缀'
@@ -138,7 +144,6 @@ class AddCourse extends Component {
             value={this.state.coursePrefix}
             onChange={this.coursePrefixInput.bind(this)}
           />
-          {/* course suffix */}
           <AtInput
             name='courseSuffix'
             title='课程后缀'
@@ -147,7 +152,6 @@ class AddCourse extends Component {
             value={this.state.courseSuffix}
             onChange={this.courseSuffixInput.bind(this)}
           />
-          {/* instructor */}
           <AtInput
             name='instructor'
             title='Instructor'
@@ -156,14 +160,12 @@ class AddCourse extends Component {
             value={this.state.instructor}
             onChange={this.instructorInput.bind(this)}
           />
-          {/* description */}
           <AtTextarea
             maxLength={200}
             placeholder='e.g. 这节课将用两小时复习完 Math115 全部内容。'
             value={this.state.courseDescription}
             onChange={this.courseDescriptionInput.bind(this)}
           />
-          {/* scale */}
           <Text>课程班人数：{this.state.courseScaleText}</Text>
           <AtRange
             value={this.state.courseScale}
@@ -171,7 +173,6 @@ class AddCourse extends Component {
             max={50}
             onChange={this.courseScaleInput.bind(this)}
           />
-          {/* duration */}
           <Text>课程时长(min)</Text>
           <AtSlider 
             step={5} 
@@ -181,19 +182,16 @@ class AddCourse extends Component {
             showValue
             onChange={this.onCourseDurationInput.bind(this)}
           />
-          {/* start date */}
           <View>
             <Picker mode='date' onChange={this.onCourseDateChange}>
               开课日期：{this.state.courseDateSel}
             </Picker>
           </View>
-          {/* start time */}
           <View>
             <Picker mode='time' onChange={this.onCourseTimeChange}>
               开课时间：{this.state.courseTimeSel}
             </Picker>
           </View>
-          {/* location */}
           <AtInput
             name='location'
             title='上课地点'
@@ -202,8 +200,15 @@ class AddCourse extends Component {
             value={this.state.courseLocation}
             onChange={this.courseLocationInput.bind(this)}
           />
-          {/* price */}
-          {/* submit form */}
+          <AtModal
+            isOpened={this.state.isOpened}
+            title='Policy'
+            cancelText='取消'
+            confirmText='同意'
+            onCancel={ this.cancelCourse }
+            onConfirm={ this.addCourse }
+            content='请仔细阅读Policy后，再点击同意提交课程。'
+          />
           <AtButton type='primary' formType='submit'>发布课程</AtButton>
           <AtButton type='secondary' onClick={this.saveCourse}>保存课程</AtButton>
         </AtForm>

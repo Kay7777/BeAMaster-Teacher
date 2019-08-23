@@ -2,7 +2,7 @@ import Taro, { Component } from '@tarojs/taro'
 import { connect } from '@tarojs/redux';
 import { formatDate, formatTime } from '../../utils/util'
 import { View, Text, Picker } from '@tarojs/components'
-import { AtButton, AtTextarea, AtInput, AtForm, AtRange, AtSlider } from 'taro-ui'
+import { AtButton, AtTextarea, AtInput, AtForm, AtRange, AtSlider,AtModal } from 'taro-ui'
 import './savedCourseDetail.scss'
 import { getTeacherCoursesData, updateCourseData, deleteCourse } from '../../actions/course'
 import { SAVED, POSTED } from '../../constants/course'
@@ -24,7 +24,8 @@ class SavedCourseDetail extends Component {
     courseDateSel: formatDate(new Date()),
     courseTimeSel: formatTime(new Date()),
     courseLocation: '',
-    courseState: ''
+    courseState: '',
+    isOpened: false
   }
 
   componentWillMount () {
@@ -59,15 +60,23 @@ class SavedCourseDetail extends Component {
     })
   }
 
+  callPolicy = async () => {
+    this.setState({isOpened:true})
+    console.log(this.state)
+  }
+
   // change it to posted course
   postCourse = async () => {
     this.state.courseState = POSTED
     await this.props.updateCourse(this.state)
-    // await this.props.deleteCourse(this.state)
     this.props.getTeacherCourses()
     Taro.switchTab({
       url: '/pages/index/index'
     })
+  }
+
+  cancelCourse = async () => {
+    this.setState({isOpened:false})
   }
 
   // update course information
@@ -157,7 +166,7 @@ class SavedCourseDetail extends Component {
       <View className='index'>
         
         <AtForm
-          onSubmit={this.postCourse.bind(this)}
+          onSubmit={this.callPolicy}
         >
           <AtInput
             name='courseName'
@@ -239,6 +248,15 @@ class SavedCourseDetail extends Component {
             placeholder='e.g.Cameron'
             value={this.state.courseLocation}
             onChange={this.courseLocationInput.bind(this)}
+          />
+          <AtModal
+            isOpened={this.state.isOpened}
+            title='Policy'
+            cancelText='取消'
+            confirmText='同意'
+            onCancel={ this.cancelCourse }
+            onConfirm={ this.postCourse }
+            content='请仔细阅读Policy后，再点击同意提交课程。'
           />
           <AtButton formType='submit' type='primary'>发布</AtButton>
           <AtButton type='secondary' onClick={this.updateCourse} >更改</AtButton>
