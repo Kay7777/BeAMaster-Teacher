@@ -1,6 +1,6 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Image } from '@tarojs/components'
-import { AtButton, AtCard, AtRate, AtTabs, AtTabsPane } from 'taro-ui'
+import { View, Image, Text } from '@tarojs/components'
+import { AtCard, AtRate, AtTabs, AtTabsPane, AtFab } from 'taro-ui'
 import { connect } from '@tarojs/redux'
 import { getTeacherCoursesData } from '../../actions/course'
 import { POSTED, SAVED, CLOSED } from '../../constants/course'
@@ -48,15 +48,14 @@ class Index extends Component {
     let { teacherCourses } = this.props.course
     const tabList = [{ title: '已发布' }, { title: '仅保存' }, { title: '已结束' }]
     return (
-      <AtTabs current={this.state.current} tabList={tabList} onClick={this.handleClick.bind(this)}>
-        <AtTabsPane current={this.state.current} index={0} >
-          <View style='padding: 100px 50px;background-color: #FAFBFC;text-align: center;' >
-            <View className="text">正在发布的课程</View>
+      <AtTabs className="tab" current={this.state.current} tabList={tabList} onClick={this.handleClick.bind(this)} >
+        <AtTabsPane  current={this.state.current} index={0}>
             {Object.values(teacherCourses).filter(
               teacherCourse => teacherCourse.courseState === POSTED
             ).map(
               teacherCourse =>
                 <AtCard 
+                  className="card"
                   note={`${teacherCourse.courseDateSel} ${teacherCourse.courseTimeSel} ${this.props.teacher.name}`}
                   extra={`${teacherCourse.courseDuration} min`}
                   title={teacherCourse.courseName}
@@ -72,17 +71,15 @@ class Index extends Component {
                     </View>
                   </View>
                 </AtCard>
-            )
-            }
-            </View>
-            <View className="add_btn">
-              <AtButton className='btn' type='primary' onClick={this.addCourse}>添加课程</AtButton>
-              {/* <AtButton className='btn' type='secondary' openType='contact'>联系客服</AtButton> */}
-            </View> 
+            )}
+                <View className="add">
+                  <AtFab  onClick={this.addCourse.bind(this)}>
+                    <Text className='at-fab__icon at-icon at-icon-add'></Text>
+                  </AtFab>
+                </View>
         </AtTabsPane>
-        <AtTabsPane current={this.state.current} index={1}>
-          <View style='padding: 100px 50px;background-color: #FAFBFC;text-align: center;'>
-            <View className="text">本地保存的课程</View>
+        <AtTabsPane current={this.state.current} index={1} style="white-space: initial">
+          
             {Object.values(teacherCourses).filter(
               teacherCourse => teacherCourse.courseState === SAVED
             ).map(
@@ -105,15 +102,13 @@ class Index extends Component {
               </AtCard>
             )
             }
-          </View>
-          <View className="add_btn">
-            <AtButton className='btn' type='primary' onClick={this.addCourse}>添加课程</AtButton>
-            {/* <AtButton className='btn' type='secondary' openType='contact'>联系客服</AtButton> */}
+          <View className="add">
+            <AtFab  onClick={this.addCourse.bind(this)}>
+              <Text className='at-fab__icon at-icon at-icon-add'></Text>
+            </AtFab>
           </View>
         </AtTabsPane>
-        <AtTabsPane current={this.state.current} index={2}>
-          <View style='padding: 100px 50px;background-color: #FAFBFC;text-align: center;'>
-              <View className="text">已结束的课程</View>
+        <AtTabsPane current={this.state.current} index={2} style="white-space: initial">
             { Object.values(teacherCourses).filter(
                 teacherCourse => teacherCourse.courseState === CLOSED
               ).map(
@@ -136,7 +131,6 @@ class Index extends Component {
                 </AtCard>
               )
             }
-          </View>
         </AtTabsPane>
       </AtTabs>
     )

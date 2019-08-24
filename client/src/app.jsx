@@ -27,7 +27,14 @@ class App extends Component {
       'pages/addCourse/addCourse',
       'pages/my/my',
       'pages/savedCourseDetail/savedCourseDetail',
-      'pages/postedCourseDetail/postedCourseDetail'
+      'pages/postedCourseDetail/postedCourseDetail',
+      'pages/onlineCourse/onlineCourse',
+      'pages/questions/questions',
+      'pages/my/promotion/promotion',
+      'pages/my/wallet/wallet',
+      'pages/my/rate/rate',
+      'pages/my/profile/profile'
+
     ],
     window: {
       backgroundTextStyle: 'light',
@@ -37,8 +44,7 @@ class App extends Component {
     },
     tabBar: {
       color: '#a9b7b7',
-      selectedColor: '#11cd6e',
-      // backgroundColor: 'green',      
+      selectedColor: '#11cd6e',    
       list: [
         {
         pagePath: 'pages/index/index',
@@ -47,13 +53,13 @@ class App extends Component {
         selectedIconPath: 'assets/course_selected.png'
       },
       {
-        pagePath: 'pages/index/index',
+        pagePath: 'pages/onlineCourse/onlineCourse',
         text: '直播课程',
         iconPath: 'assets/live.png',
         selectedIconPath: 'assets/live_selected.png'
       },
       {
-        pagePath: 'pages/index/index',
+        pagePath: 'pages/questions/questions',
         text: '答疑',
         iconPath: 'assets/chat.png',
         selectedIconPath: 'assets/chat_selected.png'

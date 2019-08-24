@@ -7,7 +7,7 @@ import { fetchTeacherData } from '../../actions/teacher';
 
 class Launch extends Component {
   config = {
-    navigationBarTitleText: 'Launch'
+    navigationBarTitleText: '加载中'
   }
 
   componentWillMount () { 
@@ -33,7 +33,7 @@ class Launch extends Component {
   render () {
     return (
       <View class="test-bg">
-        <Image class='bg-image' mode="scaleToFill" src='cloud://ts-dev-zehzs.7473-ts-dev-zehzs/landing.jpg'/>
+        <Image class='bg-image' mode="scaleToFill" src='cloud://ts-dev-zehzs.7473-ts-dev-zehzs/系统图片/landing.jpg'/>
       </View>
 
     )
