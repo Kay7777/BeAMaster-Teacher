@@ -22,7 +22,6 @@ const aMap = {
 
 export function fetchTeacherData () {
   return async (dispatch, getState) => {
-    Taro.showLoading({ title: '加载中...' })
     dispatch(aMap[REQUEST_TEACHER_INFO]())
     let res
     if (process.env.TARO_ENV === 'weapp') {
@@ -50,7 +49,7 @@ export function fetchTeacherData () {
   }
 }
 
-export function addTeacherData (email, university) {
+export function addTeacherData (email, university, name) {
   return async (dispatch, getState) => {
     Taro.showLoading({ title: '加载中...' })
     dispatch(aMap[REQUEST_ADD_TEACHER]())
@@ -63,6 +62,7 @@ export function addTeacherData (email, university) {
           func: 'addTeacher',
           data: {
             _openid: _openid,
+            name: name,
             email: email,
             university: university
           }

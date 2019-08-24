@@ -34,6 +34,7 @@ class AddCourse extends Component {
   }
 
   addCourse = async () => {
+
       this.state.courseState = POSTED
       await this.props.addCourse(this.state)
       this.props.getTeacherCourses()
@@ -161,8 +162,9 @@ class AddCourse extends Component {
             onChange={this.instructorInput.bind(this)}
           />
           <AtTextarea
+            disabled = {this.state.isOpened}
             maxLength={200}
-            placeholder='e.g. 这节课将用两小时复习完 Math115 全部内容。'
+            placeholder='详情'
             value={this.state.courseDescription}
             onChange={this.courseDescriptionInput.bind(this)}
           />
@@ -207,7 +209,29 @@ class AddCourse extends Component {
             confirmText='同意'
             onCancel={ this.cancelCourse }
             onConfirm={ this.addCourse }
-            content='请仔细阅读Policy后，再点击同意提交课程。'
+            content={'请仔细阅读Policy后，再点击同意提交课程。'+
+            '请仔细阅读Policy后，再点击同意提交课程。'+
+            '请仔细阅读Policy后，再点击同意提交课程。'+
+            '请仔细阅读Policy后，再点击同意提交课程。'+
+            '请仔细阅读Policy后，再点击同意提交课程。'+
+            '请仔细阅读Policy后，再点击同意提交课程。'+
+            '请仔细阅读Policy后，再点击同意提交课程。'+
+            '请仔细阅读Policy后，再点击同意提交课程。'+
+            '请仔细阅读Policy后，再点击同意提交课程。'+
+            '请仔细阅读Policy后，再点击同意提交课程。'+
+            '请仔细阅读Policy后，再点击同意提交课程。'+
+            '请仔细阅读Policy后，再点击同意提交课程。'+
+            '请仔细阅读Policy后，再点击同意提交课程。'+
+            '请仔细阅读Policy后，再点击同意提交课程。'+
+            '请仔细阅读Policy后，再点击同意提交课程。'+
+            '请仔细阅读Policy后，再点击同意提交课程。'+
+            '请仔细阅读Policy后，再点击同意提交课程。'+
+            '请仔细阅读Policy后，再点击同意提交课程。'+
+            '请仔细阅读Policy后，再点击同意提交课程。'+
+            '请仔细阅读Policy后，再点击同意提交课程。'+
+            '请仔细阅读Policy后，再点击同意提交课程。'+
+            '请仔细阅读Policy后，再点击同意提交课程。'
+            }
           />
           <AtButton type='primary' formType='submit'>发布课程</AtButton>
           <AtButton type='secondary' onClick={this.saveCourse}>保存课程</AtButton>

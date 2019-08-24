@@ -21,9 +21,10 @@ export default handleActions({
     }
   },
   [RECEIVE_TEACHER_INFO] (state, action) {
-    const { email, university } = action.payload
+    const { name, email, university } = action.payload
     return {
       ...state,
+      name,
       email,
       university,
       isFetching: false,
@@ -43,9 +44,10 @@ export default handleActions({
     }
   },
   [RECEIVE_ADD_TEACHER] (state, action) {
-    const { email, university } = action.payload
+    const { name, email, university } = action.payload
     return {
       ...state,
+      name,
       email,
       university,
       isLogged: true,      

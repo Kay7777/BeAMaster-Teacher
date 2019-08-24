@@ -1,5 +1,5 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Button } from '@tarojs/components'
+import { View, Button,Image } from '@tarojs/components'
 import { AtLoadMore } from 'taro-ui'
 import { connect } from '@tarojs/redux'
 import './launch.scss'
@@ -26,17 +26,14 @@ class Launch extends Component {
     } else {
       Taro.navigateTo({
         url: '/pages/signup/signup'
-      })      
+      })
     }
   }
 
   render () {
     return (
-      
-      <View>
-        <AtLoadMore
-        status={'loading'}
-        />
+      <View class="test-bg">
+        <Image class='bg-image' mode="scaleToFill" src='cloud://ts-dev-zehzs.7473-ts-dev-zehzs/landing.jpg'/>
       </View>
 
     )

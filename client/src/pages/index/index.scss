@@ -1,0 +1,27 @@
+Page{
+    width: 100%;
+    height: 100%;
+    background-color: #fafafa; 
+}
+.add_btn{
+    width: 100%;
+    position: fixed;
+    bottom: 10rpx;
+}
+.btn{
+    margin-top: 10rpx;
+    width: 450rpx;
+    background: #14a1fd;
+    color: #fff;
+    border-radius: 70rpx;
+}
+.text{
+    font-size: 35px;
+    text-align: center;
+    padding: 10px 10px;
+    border-block-color: blue;
+}
+.courseCover{
+    width:100%;
+    height: 150px;
+}

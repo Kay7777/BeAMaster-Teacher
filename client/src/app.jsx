@@ -38,19 +38,33 @@ class App extends Component {
     tabBar: {
       color: '#a9b7b7',
       selectedColor: '#11cd6e',
-      backgroundColor: 'white',      
+      // backgroundColor: 'green',      
       list: [
         {
         pagePath: 'pages/index/index',
-        text: '首页',
-        iconPath: 'assets/shouye.png',
-        selectedIconPath: 'assets/shouye_selected.png'
-      },{
+        text: '线下课程',
+        iconPath: 'assets/course.png',
+        selectedIconPath: 'assets/course_selected.png'
+      },
+      {
+        pagePath: 'pages/index/index',
+        text: '直播课程',
+        iconPath: 'assets/live.png',
+        selectedIconPath: 'assets/live_selected.png'
+      },
+      {
+        pagePath: 'pages/index/index',
+        text: '答疑',
+        iconPath: 'assets/chat.png',
+        selectedIconPath: 'assets/chat_selected.png'
+      },
+      {
         pagePath: 'pages/my/my',
         text: '我的',
         iconPath: 'assets/yonghu.png',
         selectedIconPath: 'assets/yonghu_selected.png'
-      }]
+      }
+    ]
     },    
     cloud: true
   }

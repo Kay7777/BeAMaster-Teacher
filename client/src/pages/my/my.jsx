@@ -1,9 +1,11 @@
 import Taro, { Component, downloadFile } from "@tarojs/taro"
 import { View, Text, Image, Video, Swiper, SwiperItem } from "@tarojs/components"
-import { AtAvatar, AtButton } from 'taro-ui'
+import { AtAvatar, AtButton,AtFloatLayout } from 'taro-ui'
 import '@tarojs/async-await'
 import { connect } from '@tarojs/redux'
 import { getWxUserData } from '../../utils/wx'
+import './my.scss'
+import { settings } from "cluster";
 
 class My extends Component {
   config = {
@@ -13,7 +15,7 @@ class My extends Component {
   state = {
     userInfo: {},
     image: null,
-    video: null
+    video: null,
   }
 
   async componentWillMount () {
@@ -69,10 +71,6 @@ class My extends Component {
     })
   }
 
-  // UploadText = async () => {
-
-  // }
-
   render() {
     const { userInfo, image, video } = this.state
     image ? null : this.DownloadImage()
@@ -81,22 +79,23 @@ class My extends Component {
     
     return (
       <View className='index'>
-        <AtAvatar image={userInfo.avatarUrl} />
-        <View>{userInfo.nickName}</View>
-        <View>{this.props.teacher.email}</View>
-        <View>{this.props.teacher.university}</View>
-        {/* <AtTextarea
-        value={text}
-        onChange={this.UploadText.bind(this)}
-        maxLength={200}
-        placeholder='请介绍你自己！'
-        /> */}
-        
-
+        <View>
+          <Button open-type="openSetting" bindgetuserinfo="bindGetUserInfo">
+            <View className='agreement'>请授权头像等信息，以便为您提供更好的服务></View>
+          </Button>
+          <View className="infor1">基本信息</View>
+          <AtAvatar className="avatar" image={userInfo.avatarUrl} />
+          <View className="infor2">名字： {this.props.teacher.name}</View>
+          <View className="infor2">邮箱： {this.props.teacher.email}</View>
+          <View className="infor2">学校： {this.props.teacher.university}</View>
+        </View>
         <Image src={image} />
         <Video src={video} />
-        <AtButton type='secondary' onClick={this.UploadImage.bind(this)}>上传照片</AtButton>
-        <AtButton type='secondary' onClick={this.UploadVideo.bind(this)}>上传视频</AtButton>
+        <View className="add_btn">
+          <AtButton className="btn" type='secondary' onClick={this.UploadImage.bind(this)}>上传照片</AtButton>
+          <AtButton className="btn" type='secondary' onClick={this.UploadVideo.bind(this)}>上传视频</AtButton>
+        </View>
+        
       </View>
     )
   }

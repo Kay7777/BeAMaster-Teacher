@@ -15,6 +15,7 @@ class SignupEmail extends Component {
   state = {
     university: '',
     emailPrefix: '',
+    teacherName: '',
     university_email: {
       'University of Alberta': 'ualberta.ca',
       'University of Toronto': 'utoronto.ca'
@@ -24,13 +25,14 @@ class SignupEmail extends Component {
   componentWillMount () {
     const params = this.$router.params
     this.setState({
-      university: params.university
+      university: params.university,
+      teacherName: params.teacherName
     })
   }
   
   signup = async () => {
     const email = `${this.state.emailPrefix}@${this.state.university_email[this.state.university]}`
-    await this.props.addTeacher(email, this.state.university)
+    await this.props.addTeacher(email, this.state.university, this.state.teacherName)
     if (this.props.teacher.isLogged) {
       Taro.switchTab({
         url: '/pages/index/index'

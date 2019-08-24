@@ -256,7 +256,35 @@ class SavedCourseDetail extends Component {
             confirmText='同意'
             onCancel={ this.cancelCourse }
             onConfirm={ this.postCourse }
-            content='请仔细阅读Policy后，再点击同意提交课程。'
+            content={
+              '请仔细阅读Policy后，再点击同意提交课程。' + 
+              '请仔细阅读Policy后，再点击同意提交课程。' + 
+              '请仔细阅读Policy后，再点击同意提交课程。' + 
+              '请仔细阅读Policy后，再点击同意提交课程。' + 
+              '请仔细阅读Policy后，再点击同意提交课程。' + 
+              '请仔细阅读Policy后，再点击同意提交课程。' + 
+              '请仔细阅读Policy后，再点击同意提交课程。' + 
+              '请仔细阅读Policy后，再点击同意提交课程。' + 
+              '请仔细阅读Policy后，再点击同意提交课程。' + 
+              '请仔细阅读Policy后，再点击同意提交课程。' + 
+              '请仔细阅读Policy后，再点击同意提交课程。' + 
+              '请仔细阅读Policy后，再点击同意提交课程。' + 
+              '请仔细阅读Policy后，再点击同意提交课程。' + 
+              '请仔细阅读Policy后，再点击同意提交课程。' + 
+              '请仔细阅读Policy后，再点击同意提交课程。' + 
+              '请仔细阅读Policy后，再点击同意提交课程。' + 
+              '请仔细阅读Policy后，再点击同意提交课程。' + 
+              '请仔细阅读Policy后，再点击同意提交课程。' + 
+              '请仔细阅读Policy后，再点击同意提交课程。' + 
+              '请仔细阅读Policy后，再点击同意提交课程。' + 
+              '请仔细阅读Policy后，再点击同意提交课程。' + 
+              '请仔细阅读Policy后，再点击同意提交课程。' + 
+              '请仔细阅读Policy后，再点击同意提交课程。' + 
+              '请仔细阅读Policy后，再点击同意提交课程。' + 
+              '请仔细阅读Policy后，再点击同意提交课程。' + 
+              '请仔细阅读Policy后，再点击同意提交课程。' + 
+              '请仔细阅读Policy后，再点击同意提交课程。' 
+            }
           />
           <AtButton formType='submit' type='primary'>发布</AtButton>
           <AtButton type='secondary' onClick={this.updateCourse} >更改</AtButton>
