@@ -3,6 +3,8 @@ import { View } from '@tarojs/components'
 import { AtAvatar } from 'taro-ui'
 import { connect } from '@tarojs/redux'
 
+import { getWxUserData } from '../../../utils/wx'
+
 class Profile extends Component {
     config = {
         navigationBarTitleText:"个人信息"

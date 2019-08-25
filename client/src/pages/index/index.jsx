@@ -4,6 +4,10 @@ import { AtCard, AtRate, AtTabs, AtTabsPane, AtFab, AtPagination  } from 'taro-u
 import { connect } from '@tarojs/redux'
 import { getTeacherCoursesData } from '../../actions/course'
 import { POSTED, SAVED, CLOSED } from '../../constants/course'
+import Modal from '../../components/modal/modal'
+import { getUserInfo } from '../../utils/index'
+import { isEmptyObject } from '../../utils/util'
+import { setGlobalData } from '../../constants/globalData'
 
 import './index.scss'
 
@@ -11,8 +15,28 @@ class Index extends Component {
   config = {
     navigationBarTitleText: '线下课程'
   }
+  
   state = {
     current: 0,
+    animationClass: '',
+    showAuthModal: false    
+  }
+
+  hideAuthModal () {
+    this.setState({
+      showAuthModal: false
+    })
+  }
+
+  processAuthResult (userData) {
+    Taro.setStorage({key: 'isHomeLongHideAuthModal', data: true})
+    console.log(userData)
+    if (userData.userInfo) {
+      setGlobalData('userData', userData)
+    }
+    this.setState({
+      showAuthModal: false
+    })
   }
 
   handleClick (value) {
@@ -23,6 +47,45 @@ class Index extends Component {
 
   componentWillMount () {
     this.props.getTeacherCourses()
+  }
+
+  componentDidMount () { 
+    setTimeout(async () => {
+      const userData = await getUserInfo()
+      let isHomeLongHideAuthModal
+      try {
+        isHomeLongHideAuthModal = Taro.getStorageSync('isHomeLongHideAuthModal')
+      } catch (error) {
+        console.log(error)
+      }
+      if (isHomeLongHideAuthModal === true || isHomeLongHideAuthModal === false) {
+        console.log("isHomeLongHideAuthModal != null")
+        let showAuthModal
+        if (isEmptyObject(userData) && !this.state.showAuthModal && !isHomeLongHideAuthModal) {
+          showAuthModal = true
+        } else {
+          showAuthModal = false
+        }
+        console.log(`showAuthModal: ${showAuthModal}`)
+        this.setState({
+          animationClass: 'animation',
+          showAuthModal
+        })
+      } else {
+        console.log("isHomeLongHideAuthModal == null")        
+        let showAuthModal
+        if (isEmptyObject(userData) && !this.state.showAuthModal) {
+          showAuthModal = true
+        } else {
+          showAuthModal = false
+        }
+        console.log(`showAuthModal: ${showAuthModal}`)
+        this.setState({
+          animationClass: 'animation',
+          showAuthModal
+        })
+      }
+    }, 1000)
   }
 
   addCourse = () => {
@@ -47,6 +110,7 @@ class Index extends Component {
   render () {
     let { teacherCourses } = this.props.course
     const tabList = [{ title: '已发布' }, { title: '仅保存' }, { title: '已结束' }]
+    const { showAuthModal } = this.state
     return (
       <AtTabs className="tab" current={this.state.current} tabList={tabList} onClick={this.handleClick.bind(this)} >
         
@@ -136,6 +200,15 @@ class Index extends Component {
               )
             }
         </AtTabsPane>
+        {showAuthModal &&
+        <Modal
+          title='授权提示'
+          contentText='人人为师请求获取授权信息'
+          onCancelCallback={this.hideAuthModal.bind(this)}
+          onConfirmCallback={this.processAuthResult.bind(this)}
+          isAuth={true}
+        />
+        }        
       </AtTabs>
     )
   }
