@@ -1,6 +1,6 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Image, Text } from '@tarojs/components'
-import { AtCard, AtRate, AtTabs, AtTabsPane, AtFab } from 'taro-ui'
+import { View, Image, Text, ScrollView } from '@tarojs/components'
+import { AtCard, AtRate, AtTabs, AtTabsPane, AtFab, AtPagination  } from 'taro-ui'
 import { connect } from '@tarojs/redux'
 import { getTeacherCoursesData } from '../../actions/course'
 import { POSTED, SAVED, CLOSED } from '../../constants/course'
@@ -49,7 +49,8 @@ class Index extends Component {
     const tabList = [{ title: '已发布' }, { title: '仅保存' }, { title: '已结束' }]
     return (
       <AtTabs className="tab" current={this.state.current} tabList={tabList} onClick={this.handleClick.bind(this)} >
-        <AtTabsPane  current={this.state.current} index={0}>
+        
+        <AtTabsPane  current={this.state.current} index={0} >
             {Object.values(teacherCourses).filter(
               teacherCourse => teacherCourse.courseState === POSTED
             ).map(
@@ -71,13 +72,16 @@ class Index extends Component {
                     </View>
                   </View>
                 </AtCard>
-            )}
+                )}
+              
                 <View className="add">
-                  <AtFab  onClick={this.addCourse.bind(this)}>
+                  <AtFab className="addcourse" onClick={this.addCourse.bind(this)}>
                     <Text className='at-fab__icon at-icon at-icon-add'></Text>
                   </AtFab>
                 </View>
         </AtTabsPane>
+       
+        
         <AtTabsPane current={this.state.current} index={1} style="white-space: initial">
           
             {Object.values(teacherCourses).filter(
@@ -103,7 +107,7 @@ class Index extends Component {
             )
             }
           <View className="add">
-            <AtFab  onClick={this.addCourse.bind(this)}>
+            <AtFab className="addcourse" onClick={this.addCourse.bind(this)}>
               <Text className='at-fab__icon at-icon at-icon-add'></Text>
             </AtFab>
           </View>
