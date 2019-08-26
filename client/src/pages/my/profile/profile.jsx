@@ -2,7 +2,6 @@ import Taro, { Component } from "@tarojs/taro"
 import { View } from '@tarojs/components'
 import { AtAvatar } from 'taro-ui'
 import { connect } from '@tarojs/redux'
-
 import { getWxUserData } from '../../../utils/wx'
 
 class Profile extends Component {
@@ -16,7 +15,6 @@ class Profile extends Component {
 
     async componentWillMount () {
         const { userInfo } = await getWxUserData()
-        console.log(userInfo)
         this.setState({
           userInfo: userInfo
         })
@@ -24,6 +22,7 @@ class Profile extends Component {
 
     render () {
         const { userInfo } = this.state
+        
         return (
             <View className='index'>
                 <View className="infor1">基本信息</View>

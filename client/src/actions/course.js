@@ -34,7 +34,8 @@ export function addCourseData (data) {
       courseDateSel, 
       courseTimeSel,
       courseLocation,
-      courseState
+      courseState,
+      price
     } = data
     Taro.showLoading({ title: '加载中...' })
     dispatch(aMap[REQUEST_ADD_COURSE]())
@@ -57,7 +58,8 @@ export function addCourseData (data) {
             courseDateSel: courseDateSel, 
             courseTimeSel: courseTimeSel, 
             courseLocation: courseLocation,
-            courseState: courseState
+            courseState: courseState,
+            price: price
           }
         }
       }).catch(err => {
@@ -111,7 +113,8 @@ export function updateCourseData (data) {
       courseDateSel, 
       courseTimeSel,
       courseLocation,
-      courseState
+      courseState,
+      price
     } = data
     Taro.showLoading({ title: '加载中...' })
     dispatch(aMap[REQUEST_ADD_COURSE]())
@@ -135,7 +138,8 @@ export function updateCourseData (data) {
             courseDateSel: courseDateSel, 
             courseTimeSel: courseTimeSel, 
             courseLocation: courseLocation,
-            courseState: courseState
+            courseState: courseState,
+            price: price
           }
         }
       }).catch(err => {
@@ -164,7 +168,8 @@ export function deleteCourse (data) {
       courseDateSel, 
       courseTimeSel,
       courseLocation,
-      courseState
+      courseState,
+      price
     } = data
     Taro.showLoading({ title: '加载中...' })
     dispatch(aMap[REQUEST_DELETE_COURSE]())
@@ -187,7 +192,8 @@ export function deleteCourse (data) {
             courseDateSel: courseDateSel, 
             courseTimeSel: courseTimeSel, 
             courseLocation: courseLocation,
-            courseState: courseState
+            courseState: courseState,
+            price: price
           }
         }
       })

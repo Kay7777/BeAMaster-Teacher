@@ -13,7 +13,8 @@ async function updateCourse(db, data) {
         courseDateSel, 
         courseTimeSel,
         courseLocation,
-        courseState
+        courseState,
+        price
       } = data
 
     await courseDB.doc(_id).update({
@@ -28,7 +29,8 @@ async function updateCourse(db, data) {
             courseDateSel: courseDateSel,
             courseTimeSel: courseTimeSel,
             courseLocation: courseLocation,
-            courseState: courseState
+            courseState: courseState,
+            price: price
         },
         success: function(res) {
           console.log(res.data)

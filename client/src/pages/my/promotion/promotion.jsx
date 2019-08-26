@@ -15,7 +15,7 @@ class Promotion extends Component {
           count: 1
         })
         await Taro.cloud.uploadFile({
-          cloudPath: `${this.props.teacher.email}/picture`,
+          cloudPath: `${this.props.teacher.email}/promotion/picture`,
           filePath: res.tempFilePaths[0]
         })
     }
@@ -26,7 +26,7 @@ class Promotion extends Component {
           compressed: true,
         })
         await Taro.cloud.uploadFile({
-          cloudPath: `${this.props.teacher.email}/video`,
+          cloudPath: `${this.props.teacher.email}/promotion/video`,
           filePath: res.tempFilePath
         })
     }
@@ -36,8 +36,8 @@ class Promotion extends Component {
 
         return (
             <View className='index'>
-                <Image src={`cloud://ts-dev-zehzs.7473-ts-dev-zehzs-1259245386/${email}/picture`} />
-                <Video src={`cloud://ts-dev-zehzs.7473-ts-dev-zehzs-1259245386/${email}/video`} />
+                <Image src={`cloud://ts-dev-zehzs.7473-ts-dev-zehzs-1259245386/${email}/promotion/picture`} />
+                <Video src={`cloud://ts-dev-zehzs.7473-ts-dev-zehzs-1259245386/${email}/promotion/video`} />
                 <View className="add_btn">
                     <AtButton className="btn" type='secondary' onClick={this.UploadImage.bind(this)}>上传照片</AtButton>
                     <AtButton className="btn" type='secondary' onClick={this.UploadVideo.bind(this)}>上传视频</AtButton>

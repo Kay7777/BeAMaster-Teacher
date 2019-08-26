@@ -156,7 +156,7 @@ class Index extends Component {
                 note={`${teacherCourse.courseDateSel} ${teacherCourse.courseTimeSel} ${this.props.teacher.name}`}
                 extra={`${teacherCourse.courseDuration} min`}
                 title={teacherCourse.courseName}
-                onClick={this.postedCourseDetail.bind(this, teacherCourse._id)}
+                onClick={this.savedCourseDetail.bind(this, teacherCourse._id)}
               >
                 <View className='at-row'>
                   <View className='at-col at-col-4'>

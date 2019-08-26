@@ -11,7 +11,8 @@ async function addCourse(db, data) {
     courseDateSel, 
     courseTimeSel,
     courseLocation,
-    courseState
+    courseState,
+    price
   } = data
   const courseDB = db.collection('Course')
   await courseDB.add({
@@ -27,30 +28,11 @@ async function addCourse(db, data) {
       courseDateSel: courseDateSel,
       courseTimeSel: courseTimeSel,
       courseLocation: courseLocation,
-      courseState: courseState
+      courseState: courseState,
+      price: price
     }
   })
   return data
 }
 
 exports.addCourse = addCourse
-
-// function getCourse(event, context) {
-//   return db.where({
-//     _id: event.courseId,
-//   }).get();
-// }
-
-// function searchCourses(event, context) {
-//   return db.where({
-//     university: event.university,
-//     courseName: {
-//       $regex: '.*' + event.query,
-//       $options: 'i'
-//     },
-//     // professor: {
-//     //   $regex: '.*' + event.query,
-//     //   $options: 'i'
-//     // }
-//   }).get();
-// }

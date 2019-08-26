@@ -25,7 +25,8 @@ class SavedCourseDetail extends Component {
     courseTimeSel: formatTime(new Date()),
     courseLocation: '',
     courseState: '',
-    isOpened: false
+    isOpened: false,
+    price: ''
   }
 
   componentWillMount () {
@@ -41,7 +42,8 @@ class SavedCourseDetail extends Component {
       courseDateSel,
       courseTimeSel,
       courseLocation,
-      courseState 
+      courseState,
+      price
     } = this.props.course.teacherCourses[params.courseId]
     this.setState({
       id: params.courseId,
@@ -56,7 +58,8 @@ class SavedCourseDetail extends Component {
       courseDateSel,
       courseTimeSel,
       courseLocation,
-      courseState      
+      courseState,
+      price
     })
   }
 
@@ -161,6 +164,13 @@ class SavedCourseDetail extends Component {
     return courseLocation
   }
 
+  priceInput (price) {
+    this.setState({
+      price
+    })
+    return price
+  }
+
   render () {
     return (
       <View className='index'>
@@ -229,6 +239,14 @@ class SavedCourseDetail extends Component {
             onChange={this.onCourseDurationInput.bind(this)}
           />
           {/* start date */}
+          <AtInput
+            name='price'
+            title='价格 CAD/人/小时'
+            type='number'
+            placeholder='e.g. 20'
+            value={this.state.price}
+            onChange={this.priceInput.bind(this)}
+          />
           <View>
             <Picker mode='date' onChange={this.onCourseDateChange}>
               开课日期：{this.state.courseDateSel}

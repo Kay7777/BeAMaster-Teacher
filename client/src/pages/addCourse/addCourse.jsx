@@ -26,7 +26,9 @@ class AddCourse extends Component {
     courseTimeSel: formatTime(new Date()),
     courseLocation: '',
     courseState: '',
-    isOpened: false
+    isOpened: false,
+    price: ''
+
   }
 
   callPolicy = async () => {
@@ -43,7 +45,7 @@ class AddCourse extends Component {
       })
   }
 
-  cancelCourse = async () => {
+  cancelPolicy = async () => {
     this.setState({isOpened:false})
   }
 
@@ -122,6 +124,12 @@ class AddCourse extends Component {
     })
     return courseLocation
   }
+  priceInput (price) {
+    this.setState({
+      price
+    })
+    return price
+  }
 
   render () {
     return (
@@ -155,7 +163,7 @@ class AddCourse extends Component {
           />
           <AtInput
             name='instructor'
-            title='Instructor'
+            title='学校讲师'
             type='text'
             placeholder='e.g.Gainer,Alexander'
             value={this.state.instructor}
@@ -184,6 +192,14 @@ class AddCourse extends Component {
             showValue
             onChange={this.onCourseDurationInput.bind(this)}
           />
+          <AtInput
+            name='price'
+            title='价格 CAD/人/小时'
+            type='number'
+            placeholder='e.g. 20'
+            value={this.state.price}
+            onChange={this.priceInput.bind(this)}
+          />
           <View>
             <Picker mode='date' onChange={this.onCourseDateChange}>
               开课日期：{this.state.courseDateSel}
@@ -207,7 +223,7 @@ class AddCourse extends Component {
             title='Policy'
             cancelText='取消'
             confirmText='同意'
-            onCancel={ this.cancelCourse }
+            onCancel={ this.cancelPolicy }
             onConfirm={ this.addCourse }
             content={'请仔细阅读Policy后，再点击同意提交课程。'+
             '请仔细阅读Policy后，再点击同意提交课程。'+

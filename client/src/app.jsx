@@ -18,6 +18,12 @@ const store = configStore()
 
 class App extends Component {
   config = {
+    // plugins: {
+    //   wxComment: {
+    //     version: '1.0.0',
+    //     provider: 'R3vJGkpvEGxDAeNDR2aUCuKH-MdYXbMMI'
+    //   }
+    // },
     pages: [
       'pages/launch/launch',      
       'pages/index/index',
@@ -29,7 +35,7 @@ class App extends Component {
       'pages/savedCourseDetail/savedCourseDetail',
       'pages/postedCourseDetail/postedCourseDetail',
       'pages/onlineCourse/onlineCourse',
-      'pages/questions/questions',
+      'pages/comments/comments',
       'pages/my/promotion/promotion',
       'pages/my/wallet/wallet',
       'pages/my/rate/rate',
@@ -59,8 +65,8 @@ class App extends Component {
         selectedIconPath: 'assets/live_selected.png'
       },
       {
-        pagePath: 'pages/questions/questions',
-        text: '答疑',
+        pagePath: 'pages/comments/comments',
+        text: '论坛',
         iconPath: 'assets/chat.png',
         selectedIconPath: 'assets/chat_selected.png'
       },

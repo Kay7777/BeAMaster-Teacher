@@ -1,9 +1,9 @@
 import Taro, { Component } from '@tarojs/taro'
 import { connect } from '@tarojs/redux';
 import { formatDate, formatTime } from '../../utils/util'
-import { View, Text, Picker } from '@tarojs/components'
+import { View, Text, Picker, Image } from '@tarojs/components'
 import './postedCourseDetial.scss'
-import { AtButton, AtTextarea, AtInput, AtForm, AtRange, AtSlider } from 'taro-ui'
+import { AtButton, AtTextarea, AtModal, AtInput, AtForm, AtRange, AtSlider } from 'taro-ui'
 import { getTeacherCoursesData, updateCourseData, deleteCourse } from '../../actions/course'
 import { POSTED } from '../../constants/course'
 
@@ -27,7 +27,9 @@ class PostedCourseDetail extends Component {
     courseDateSel: formatDate(new Date()),
     courseTimeSel: formatTime(new Date()),
     courseLocation: '',
-    courseState: ''
+    courseState: '',
+    price: '',
+    isOpened: false,
   }
 
   componentWillMount () {
@@ -43,7 +45,8 @@ class PostedCourseDetail extends Component {
       courseDateSel,
       courseTimeSel,
       courseLocation,
-      courseState 
+      courseState,
+      price
     } = this.props.course.teacherCourses[params.courseId]
     this.setState({
       id: params.courseId,
@@ -58,7 +61,8 @@ class PostedCourseDetail extends Component {
       courseDateSel,
       courseTimeSel,
       courseLocation,
-      courseState      
+      courseState,
+      price
     })
   }
   // update course information
@@ -142,10 +146,47 @@ class PostedCourseDetail extends Component {
     })
     return courseLocation
   }
+
+  priceInput (price) {
+    this.setState({
+      price
+    })
+    return price
+  }
+
+  uploadQR = async ()=> {
+    const res = await Taro.chooseImage({
+      sourceType: ['album', 'camera'],
+      sizeType: ['original', 'compressed'],
+      count: 1
+    })
+    await Taro.cloud.uploadFile({
+      cloudPath: `${this.props.teacher.email}/${this.state.id}/QR`,
+      filePath: res.tempFilePaths[0]
+    })
+  }
+  callPolicy = async () => {
+    this.setState({isOpened:true})
+  }
+
+  cancelPolicy = async () => {
+    this.setState({isOpened:false})
+  }
+
+  scanQR = async () => {
+    Taro.previewImage({
+      urls:[`cloud://ts-dev-zehzs.7473-ts-dev-zehzs-1259245386/${this.props.teacher.email}/${this.state.id}/QR`]
+    })
+  }
+  
+
+
   
 
   render () {
+    const email = this.props.teacher.email
     
+
     return (
       <View className='index'>
         <AtForm>
@@ -216,6 +257,15 @@ class PostedCourseDetail extends Component {
             showValue
             onChange={this.onCourseDurationInput.bind(this)}
           />
+          <AtInput
+            disabled={isDisabled}
+            name='price'
+            title='价格 CAD/人/小时'
+            type='number'
+            placeholder='e.g. 20'
+            value={this.state.price}
+            onChange={this.priceInput.bind(this)}
+          />
           {/* start date */}
           <View>
             <Picker disabled={isDisabled} mode='date' onChange={this.onCourseDateChange}>
@@ -238,15 +288,51 @@ class PostedCourseDetail extends Component {
             value={this.state.courseLocation}
             onChange={this.courseLocationInput.bind(this)}
           />
-          <AtButton disabled={isDisabled} type='secondary' onClick={this.updateCourse} >更改</AtButton>
-          <AtButton type='secondary' onClick={this.deleteCourse} >删除</AtButton>
+          <AtModal
+            isOpened={this.state.isOpened}
+            title='Policy'
+            cancelText='取消'
+            confirmText='同意'
+            onCancel={ this.cancelPolicy }
+            onConfirm={ this.deleteCourse }
+            content={'请仔细阅读Policy后，再点击同意提交课程。'+
+            '请仔细阅读Policy后，再点击同意提交课程。'+
+            '请仔细阅读Policy后，再点击同意提交课程。'+
+            '请仔细阅读Policy后，再点击同意提交课程。'+
+            '请仔细阅读Policy后，再点击同意提交课程。'+
+            '请仔细阅读Policy后，再点击同意提交课程。'+
+            '请仔细阅读Policy后，再点击同意提交课程。'+
+            '请仔细阅读Policy后，再点击同意提交课程。'+
+            '请仔细阅读Policy后，再点击同意提交课程。'+
+            '请仔细阅读Policy后，再点击同意提交课程。'+
+            '请仔细阅读Policy后，再点击同意提交课程。'+
+            '请仔细阅读Policy后，再点击同意提交课程。'+
+            '请仔细阅读Policy后，再点击同意提交课程。'+
+            '请仔细阅读Policy后，再点击同意提交课程。'+
+            '请仔细阅读Policy后，再点击同意提交课程。'+
+            '请仔细阅读Policy后，再点击同意提交课程。'+
+            '请仔细阅读Policy后，再点击同意提交课程。'+
+            '请仔细阅读Policy后，再点击同意提交课程。'+
+            '请仔细阅读Policy后，再点击同意提交课程。'+
+            '请仔细阅读Policy后，再点击同意提交课程。'+
+            '请仔细阅读Policy后，再点击同意提交课程。'+
+            '请仔细阅读Policy后，再点击同意提交课程。'
+            }
+          />       
+          <Image className="QR" onClick={this.scanQR}
+            src={`cloud://ts-dev-zehzs.7473-ts-dev-zehzs-1259245386/${email}/${this.state.id}/QR`} 
+            data-src={`cloud://ts-dev-zehzs.7473-ts-dev-zehzs-1259245386/${email}/${this.state.id}/QR`}
+            />
+          <AtButton disabled={isDisabled} type='primary' onClick={this.updateCourse} >更改</AtButton>
+          <AtButton disabled={!isDisabled} type='secondary' onClick={this.uploadQR} >提交群组二维码</AtButton>
+          <AtButton className="delete" type='secondary' onClick={this.callPolicy.bind(this)} >删除</AtButton>
         </AtForm>
       </View>
     )
   }
 }
 
-export default connect(({course}) => ({course}), (dispatch) => ({
+export default connect(({course, teacher}) => ({course, teacher}), (dispatch) => ({
   async updateCourse(...args){
     await dispatch(updateCourseData(...args))
   },
