@@ -22,7 +22,7 @@
     "dev:h5": "npm run build:h5 -- --watch",
     "dev:rn": "npm run build:rn -- --watch"
   },
-  "author": "Kay Song",
+  "author": "Kay Song, Yu Zhu",
   "license": "MIT",
   "dependencies": {
     "@tarojs/async-await": "^1.3.9",
