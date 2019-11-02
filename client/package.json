@@ -1,5 +1,5 @@
 {
-  "name": "teacher",
+  "name": "BeAMaster Teacher Client",
   "version": "1.0.0",
   "private": true,
   "description": "teacher",
@@ -22,7 +22,7 @@
     "dev:h5": "npm run build:h5 -- --watch",
     "dev:rn": "npm run build:rn -- --watch"
   },
-  "author": "",
+  "author": "Kay Song",
   "license": "MIT",
   "dependencies": {
     "@tarojs/async-await": "^1.3.9",

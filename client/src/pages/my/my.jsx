@@ -54,7 +54,6 @@ class My extends Component {
         <View className='user-page'
           style={{backgroundImage: `url(http://makefriends.bs2dl.yy.com/my_page_top_bg.png)`}}>
         <View className='at-row'>
-            
             <View className='at-col at-col-8'>
               <View className="infor1">{this.props.teacher.name}</View>
               <View className="infor2">{this.props.teacher.email}</View>
